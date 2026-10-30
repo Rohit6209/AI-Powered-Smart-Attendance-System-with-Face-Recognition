@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart Attendance</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section id="loginView" class="login">
+  <div class="login-box">
+    <h1>Smart Attendance</h1>
+    <p class="muted">Sign in to take attendance and view reports.</p>
+    <input id="lu" placeholder="Username" autocomplete="username">
+    <input id="lp" type="password" placeholder="Password" autocomplete="current-password">
+    <button id="loginBtn">Sign in</button>
+    <p id="loginErr" class="err"></p>
+    <a href="/">Student login</a>
+  </div>
+</section>
+
+<section id="appView" hidden>
+  <header>
+    <h2>Smart Attendance</h2>
+    <nav>
+      <button class="tab active" data-tab="mark">Take attendance</button>
+      <button class="tab" data-tab="reg">Students</button>
+      <button class="tab" data-tab="rep">Reports</button>
+    </nav>
+    <div><span id="who" class="muted"></span> <button id="logoutBtn" class="ghost">Sign out</button></div>
+  </header>
+
+  <main>
+    <!-- MARK -->
+    <div id="mark" class="pane">
+      <div class="cam-wrap">
+        <video id="vidMark" autoplay muted playsinline></video>
+        <div id="scanLine"></div>
+      </div>
+      <div class="panel">
+        <label>Subject</label>
+        <input id="subject" placeholder="e.g. Data Structures">
+        <button id="scanBtn">Scan face</button>
+        <label class="check"><input type="checkbox" id="auto"> Auto-scan every 5 seconds</label>
+        <p class="muted">Face the camera and blink once while scanning.</p>
+        <div id="result" class="result"></div>
+      </div>
+    </div>
+
+    <!-- REGISTER -->
+    <div id="reg" class="pane" hidden>
+      <div class="cam-wrap"><video id="vidReg" autoplay muted playsinline></video></div>
+      <div class="panel">
+        <label>Roll number</label><input id="rRoll">
+        <label>Full name</label><input id="rName">
+        <label>Student email</label><input id="rEmail" type="email">
+        <label>Parent email</label><input id="rParent" type="email">
+        <label>Student login password</label><input id="rPass" type="password" placeholder="Leave empty to use the roll number">
+        <button id="regBtn">Capture face and register</button>
+        <p id="regMsg" class="muted"></p>
+      </div>
+      <div class="wide">
+        <h3>Registered students</h3>
+        <div class="scroll"><table id="stuTable"></table></div>
+      </div>
+    </div>
+
+    <!-- REPORTS -->
+    <div id="rep" class="pane" hidden>
+      <div class="wide filters">
+        <input type="date" id="fDate">
+        <input id="fSub" placeholder="Subject (optional)">
+        <button id="loadBtn">Show</button>
+        <button id="csvBtn" class="ghost">Download CSV</button>
+        <input id="thr" type="number" value="75" min="1" max="100" class="small">
+        <button id="alertBtn" class="ghost">Send low-attendance alerts</button>
+      </div>
+      <p id="alertMsg" class="wide muted"></p>
+      <div class="wide"><h3>Last 7 days</h3><canvas id="chart" width="700" height="220"></canvas></div>
+      <div class="wide"><h3>Attendance percentage</h3><div class="scroll"><table id="sumTable"></table></div></div>
+      <div class="wide"><h3>Attendance log</h3><div class="scroll"><table id="logTable"></table></div></div>
+    </div>
+  </main>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>
